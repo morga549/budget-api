@@ -1,0 +1,28 @@
+{
+  "name": "budget-api",
+  "version": "1.0.0",
+  "description": "Node/Express API with Postgres backend for budgeting app.",
+  "main": "app.js",
+  "dependencies": {
+    "accounting": "^0.4.1",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "pg": "^7.11.0",
+    "pg-pool": "^2.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morga549/budget-api.git"
+  },
+  "author": "morga549",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/morga549/budget-api/issues"
+  },
+  "homepage": "https://github.com/morga549/budget-api#readme"
+}
