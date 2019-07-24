@@ -10,6 +10,10 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+    res.status(200).send('ok');
+});
+
 app.use('/expenses', expenseRouter);
 
 app.listen(process.env.PORT);
