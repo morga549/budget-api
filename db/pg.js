@@ -1,4 +1,9 @@
 const { Pool } = require('pg');
+const types = require('pg').types; 
+
+types.setTypeParser(1700, function(val) {
+  return parseInt(val)
+})
 
 const pool = new Pool({
     host: process.env.DB_HOST,
