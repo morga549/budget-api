@@ -26,4 +26,20 @@ router.post('/', async (req, res) => {
     } 
 });
 
+router.get('/', async (req, res) => {
+    try{
+        const category = req.query[CONST.params.category];
+        try{
+            const data = await expenseHandler.getExpensesByCategory(category);
+            res.status(200).send(data);
+        } catch(error){
+            console.log(error);
+        }
+    }
+    catch(error){
+        console.log(error);
+        res.status(400).send('Internal Server Error');
+    }
+})
+
 module.exports = router;

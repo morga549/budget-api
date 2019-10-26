@@ -14,7 +14,7 @@ const query = (text, params) => {
     return new Promise((resolve, reject) => {
         pool.query(text, params)
             .then((result) => {
-                resolve(result.rows[0]);
+                resolve(result.rows);
             })
             .catch((error) => {
                 reject(error);

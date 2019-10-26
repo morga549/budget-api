@@ -13,6 +13,19 @@ const createExpense = (amount, category, description, date, user) => {
     });
 }
 
+const getExpensesByCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        pg.query(CONST.queries.get_expenses_by_category, [category])
+            .then((result) => {
+                resolve(result);
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
 module.exports = {
     createExpense: createExpense,
+    getExpensesByCategory: getExpensesByCategory
 }
