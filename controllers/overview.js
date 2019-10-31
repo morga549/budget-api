@@ -1,9 +1,9 @@
 const pg = require('../db/pg');
 const { CONST } = require('../utils/constants');
 
-const getCategories = (budget_id) => {
+const getOverview = (budget_id) => {
     return new Promise((resolve, reject) => {
-        pg.query(CONST.queries.get_categories, [budget_id])
+        pg.query(CONST.queries.get_spent_vs_budgetted, [budget_id])
             .then((result) => {
                 resolve(result);
             })
@@ -14,5 +14,5 @@ const getCategories = (budget_id) => {
 }
 
 module.exports = {
-    getCategories: getCategories,
+    getOverview: getOverview,
 }

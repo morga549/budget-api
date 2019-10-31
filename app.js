@@ -6,6 +6,7 @@ dotenv.config();
 
 const expenseRouter = require('./routes/expenses');
 const categoryRouter = require('./routes/categories');
+const overviewRouter = require('./routes/overview');
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/expenses', expenseRouter);
 app.use('/categories', categoryRouter);
+app.use('/overview', overviewRouter);
 
 app.listen(process.env.PORT);
 console.log('Listening on port: ' + process.env.PORT);
