@@ -13,9 +13,8 @@ router.post('/', async (req, res) => {
     const user = req.body[CONST.params.user];
 
         try {
-            const id = await expenseHandler.createExpense(amount, category, description, date, user);
-            console.log(id);
-            res.status(200).send(id);
+            const data = await expenseHandler.createExpense(amount, category, description, date, user);
+            res.status(200).send(data);
         } catch(error) {
             console.log(error);
             res.status(500).send('Internal Server Error')
