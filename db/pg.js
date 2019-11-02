@@ -2,7 +2,11 @@ const { Pool } = require('pg');
 const types = require('pg').types; 
 
 types.setTypeParser(1700, function(val) {
-  return parseInt(val)
+  return parseFloat(val);
+})
+
+types.setTypeParser(23, (val) => {
+    return parseInt(val);
 })
 
 const pool = new Pool({

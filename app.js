@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    res.status(200).send('ok');
+    res.status(200).send('UP');
 });
 
 app.use('/expenses', expenseRouter);
