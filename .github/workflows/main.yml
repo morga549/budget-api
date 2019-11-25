@@ -1,0 +1,27 @@
+name: gae deploy
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 8.x 
+    - name: npm i
+      run: npm i 
+    - name: Setup Google Cloud SDK
+      uses: mathrix-education/setup-gcloud@0.1.2
+      with: 
+        service-account-key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+        project: budget-app
+    - name: Deploy to GAE
+      run: gcloud app deploy
+     
+        
+
