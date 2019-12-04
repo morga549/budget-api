@@ -1,6 +1,13 @@
 const { Pool } = require('pg');
-const types = require('pg').types; 
+const types = require('pg').types;
+const secretService = require('../utils/secrets');
 
+
+if(process.env.NODE_ENV == 'production'){
+    secretService.addSecretsToEnv();
+}
+
+//added pg.types because int and float columns were coming back as string
 types.setTypeParser(1700, function(val) {
   return parseFloat(val);
 })
@@ -25,11 +32,12 @@ const query = (text, params) => {
             .then((result) => {
                 resolve(result.rows);
             })
-            .catch((error) => {
+            .catch((error) => { 
                 reject(error);
             });
     });
 }
+
 module.exports = {
     query: query
 }

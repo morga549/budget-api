@@ -4,6 +4,8 @@
   "description": "Node/Express API with Postgres backend for budgeting app.",
   "main": "app.js",
   "dependencies": {
+    "@google-cloud/kms": "^1.5.3",
+    "@google-cloud/storage": "^4.1.3",
     "accounting": "^0.4.1",
     "body-parser": "^1.19.0",
     "dotenv": "^8.0.0",

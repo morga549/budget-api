@@ -1,3 +1,4 @@
+global.baseDir = __dirname;
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv')
@@ -18,7 +19,7 @@ app.get('/', (req, res) => {
 
 app.use('/expenses', expenseRouter);
 app.use('/categories', categoryRouter);
-app.use('/overview', overviewRouter);
+app.use('/overview', overviewRouter);   
 
 app.listen(process.env.PORT);
 console.log('Listening on port: ' + process.env.PORT);
