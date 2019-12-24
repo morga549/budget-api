@@ -6,11 +6,12 @@ const {CONST} = require('../utils/constants');
 router.post('/', async (req, res) => {
 
     try{
-    const amount = req.body[CONST.params.amount];
-    const category = req.body[CONST.params.category];
-    const description = req.body[CONST.params.description];
-    const date = req.body[CONST.params.date];
-    const user = req.body[CONST.params.user];
+        const 
+            amount = req.body[CONST.params.amount],
+            category = req.body[CONST.params.category],
+            description = req.body[CONST.params.description],
+            date = req.body[CONST.params.date],
+            user = req.body[CONST.params.user];
 
         try {
             const data = await expenseHandler.createExpense(amount, category, description, date, user);

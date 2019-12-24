@@ -3,3 +3,5 @@ package-lock.json
 *.env
 .enc.env
 .enc-63.env
+.vscode/*
+.vscode*
