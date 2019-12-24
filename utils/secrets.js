@@ -1,44 +1,41 @@
 const kms = require('@google-cloud/kms');
 const Storage = require('@google-cloud/storage');
-const {promisify} = require('util');
-const fs = require('fs');
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
+console.log(process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-// if running in production we need to get the .env file from a storage budcket and decrypt.
-const addSecretsToEnv = () => {
+// if running in production we need to get the .env file from a storage bucket and decrypt.
+const getSectrets = async () => {
     // setup for storage bucket
     const bucketName='budget-app-encrypted-secrets';
-    const fileName='enc-64.env';
+    const fileName='pg_secrets.json.enc';
     const storage = new Storage.Storage();
     const file = storage.bucket(bucketName).file(fileName);
     
     // setup for KMS
-    const client = kms.KeyManagementServiceClient();
-    const projectId = 'budget-app-259923';
+    const client = new kms.KeyManagementServiceClient();
     const locationId = 'global';
+    const projectId = 'budget-app-259923';
     const keyRingID = 'budget-integration-secrets';
-    const keyID = 'budget-api-secrets'
-    const encFileName = 'encrypted.txt';
+    const keyID = 'local-dev-key';
 
-    await file.download(encFileName);
-
-    const cipherText = readFile(encFileName);
-    const name = client.cryptoKeyPath(
+    const formattedName = client.cryptoKeyPath(
         projectId,
         locationId,
         keyRingID,
         keyID,
     );
 
-    const [result] = await client.decrypt({name, cipherText});
-    
-    const decryptFileName = global.baseDir + '/.env';
-    await writeFile(decryptFileName);
+    const ciphertextDownload = await file.download();
 
-    require('dotenv').config();
+    const ciphertext = ciphertextDownload[0];
+
+    const [decrypted] = await client.decrypt({
+        name: formattedName,  
+        ciphertext,
+    });
+    const result = decrypted.plaintext.toString();
+    const json_result = JSON.parse(result);
+   
+    return json_result;
 }
 
-module.exports = {
-    addSecretsToEnv
-};
+exports.getSecrets = getSectrets;

@@ -1,43 +1,31 @@
 const { Pool } = require('pg');
 const types = require('pg').types;
-const secretService = require('../utils/secrets');
-
-
-if(process.env.NODE_ENV == 'production'){
-    secretService.addSecretsToEnv();
-}
+const secrets = require('../utils/secrets');
 
 //added pg.types because int and float columns were coming back as string
 types.setTypeParser(1700, function(val) {
-  return parseFloat(val);
-})
-
+    return parseFloat(val);
+});
+  
 types.setTypeParser(23, (val) => {
     return parseInt(val);
-})
-
-const pool = new Pool({
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    max: 5,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
 });
 
-const query = (text, params) => {
-    return new Promise((resolve, reject) => {
-        pool.query(text, params)
-            .then((result) => {
-                resolve(result.rows);
-            })
-            .catch((error) => { 
-                reject(error);
-            });
-    });
-}
+const query = async (text, params) => {
+    const db_secrets = await secrets.getSecrets();
+    
+    const pool = new Pool({ 
+        host: db_secrets.db_host,
+        database: db_secrets.db_name,
+        user: db_secrets.db_user,
+        password: db_secrets.db_password,
+        max: 5,
+        idleTimeoutMillis: 30000,   
+        connectionTimeoutMillis: 2000,
+        });
+    return pool.query(text,params);
+};
 
 module.exports = {
-    query: query
+    query
 }

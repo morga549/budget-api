@@ -18,7 +18,7 @@ const getExpensesByCategory = (category) => {
     return new Promise((resolve, reject) => {
         pg.query(CONST.queries.get_expenses_by_category, [category])
             .then((result) => {
-                resolve(result);
+                resolve(result.rows);
             })
             .catch((error) => {
                 reject(error);
