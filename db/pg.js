@@ -13,9 +13,13 @@ types.setTypeParser(23, (val) => {
 
 const query = async (text, params) => {
     const db_secrets = await secrets.getSecrets();
+
+    const host_name = process.env.NODE_ENV === 'production' ? 
+        `/cloudsql/${db_secrets.instance_connection_name}` :
+        'localhost';
     
     const pool = new Pool({ 
-        host: db_secrets.db_host,
+        host: host_name,
         database: db_secrets.db_name,
         user: db_secrets.db_user,
         password: db_secrets.db_password,
