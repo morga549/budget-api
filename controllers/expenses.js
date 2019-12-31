@@ -5,8 +5,9 @@ const createExpense = (amount, category, description, date, user) => {
     return new Promise((resolve, reject) => {
         pg.query(CONST.queries.create_expense, [amount, category, description, date, user])
             .then((result) => {
-                result[0].category = category;
-                resolve(result[0]);
+                let return_val = result.rows;
+                return_val.category = category;
+                resolve(return_val);
             })
             .catch((error) => {
                 reject(error);
